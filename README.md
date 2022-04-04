@@ -28,7 +28,7 @@ To get a local copy up and running follow these simple example steps.
 
 <br>
 
-> To run `ruby schoollibrary.rb`
+> To run `ruby app.rb`
 
 ## Author
 
