@@ -9,6 +9,8 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
+
+    super
   end
 
   def can_use_services?
@@ -24,7 +26,6 @@ class Person < Nameable
   def of_age?
     @age >= 18
   end
-
 end
 
 julie = Person.new(1, 12, 'julie', parent_permission: false)
