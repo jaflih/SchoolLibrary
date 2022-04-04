@@ -10,7 +10,3 @@ class Teacher < Person
     true
   end
 end
-
-timmy = Teacher.new(4, 12, 'specialization', 'Timmy', parent_permission: false)
-p timmy
-p timmy.can_use_services?
