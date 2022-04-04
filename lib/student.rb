@@ -10,7 +10,3 @@ class Student < Person
     "¯\(ツ)/¯"
   end
 end
-
-remy = Student.new(3, 24, 'classroom', 'Remy')
-p remy
-p remy.play_hooky
