@@ -46,3 +46,13 @@ p 'Ines books : '
 ines.rentals.each do |r|
   print r.book.title, ' '
 end
+
+p '-------------'
+book.add_rental('mm', john)
+john.rentals.each do |r|
+  print r.book.title, ' '
+end
+
+book.rentals.each do |r|
+  print r.person.name, ' '
+end
