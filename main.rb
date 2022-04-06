@@ -122,37 +122,24 @@ class Main
     puts 'Welcome to School Library App!'
     puts
 
-    run_menu
+    opts = ['none', :list_all_books, :list_all_persons, :create_a_person, :create_a_book, :create_a_rental,
+            :list_rental_person]
 
-    puts 'Thank you for using this app!'
-  end
-
-  def run_menu
     option = 0
 
     loop do
       menu
       option = gets.chomp
+      break if option == '7'
 
-      case option
-      when '1'
-        list_all_books
-      when '2'
-        list_all_persons
-      when '3'
-        create_a_person
-      when '4'
-        create_a_book
-      when '5'
-        create_a_rental
-      when '6'
-        list_rental_person
-      when '7'
-        break
+      if option.to_i.positive? && option.to_i < 7
+        c = opts[option.to_i]
+        send(c)
       else
         puts 'Option unknown'
       end
     end
+    puts 'Thank you for using this app!'
   end
 end
 
