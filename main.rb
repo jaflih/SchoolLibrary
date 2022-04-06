@@ -122,10 +122,8 @@ class Main
     puts 'Welcome to School Library App!'
     puts
 
-    opts = ['none', :list_all_books, :list_all_persons, :create_a_person, :create_a_book, :create_a_rental,
-            :list_rental_person]
-
-    option = 0
+    opts = %i[list_all_books list_all_persons create_a_person create_a_book create_a_rental
+              list_rental_person]
 
     loop do
       menu
@@ -133,8 +131,7 @@ class Main
       break if option == '7'
 
       if option.to_i.positive? && option.to_i < 7
-        c = opts[option.to_i]
-        send(c)
+        send(opts[option.to_i - 1])
       else
         puts 'Option unknown'
       end
