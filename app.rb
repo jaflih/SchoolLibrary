@@ -5,54 +5,46 @@ require_relative 'lib/classroom'
 require_relative 'lib/student'
 require_relative 'lib/book'
 require_relative 'lib/rental'
+require_relative 'lib/teacher'
 
-person = Person.new(22, 12, 'maximilianus')
-p person.correct_name
-capitalized_person = CapitalizeDecorator.new(person)
-p capitalized_person.correct_name
-capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
-p capitalized_trimmed_person.correct_name
+class App
+  def initialize
+    @books = []
+    @persons = []
+    @rentals = []
+    @id = 0
+  end
 
-classroom = Classroom.new('mathematic')
+  def list_all_books
+    @books
+  end
 
-sarrah = Student.new(1, 20, nil, 'Sarrah')
-john = Student.new(2, 20, nil, 'John')
-ines = Student.new(3, 20, nil, 'Ines')
+  def list_all_persons
+    @persons
+  end
 
-classroom.add_student(sarrah)
-classroom.add_student(ines)
+  def create_a_book(title, author)
+    @books.push(Book.new(title, author))
+  end
 
-classroom.students.each do |e|
-  print e.name, ' '
-end
-puts
-p 'Sarrah classroom :', sarrah.classroom.label
+  def create_a_student(name, age, parent_permission)
+    @persons.push(Student.new((@id * 100) + 10, age, nil, name, parent_permission: parent_permission))
+    @id += 1
+  end
 
-p 'John classroom :', john.classroom
+  def create_a_teacher(name, age, specialization)
+    @persons.push(Teacher.new(@id, age, specialization, name, parent_permission: true))
+    @id += 1
+  end
 
-p 'John classroom :', john.classroom.label unless john.classroom.nil?
+  def create_a_rental(date, book_id, person_id)
+    @rentals.push(Rental.new(date, @books[book_id], @persons[person_id]))
+  end
 
-john.classroom = classroom
-p 'John classroom :', john.classroom.label
-
-book = Book.new('MyBook', 'Garibaldy')
-book2 = Book.new('MyBook2', 'Garibaldy')
-book3 = Book.new('MyBook3', 'Garibaldy')
-Rental.new('12/12/2000', book, ines)
-Rental.new('12/12/2000', book2, ines)
-Rental.new('12/12/2000', book3, ines)
-
-p 'Ines books : '
-ines.rentals.each do |r|
-  print r.book.title, ' '
-end
-
-p '-------------'
-book.add_rental('mm', john)
-john.rentals.each do |r|
-  print r.book.title, ' '
-end
-
-book.rentals.each do |r|
-  print r.person.name, ' '
+  def list_rental_person(id)
+    @persons.each do |p|
+      return p.rentals if p.id == id
+    end
+    nil
+  end
 end
