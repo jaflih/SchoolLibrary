@@ -14,6 +14,7 @@ class Main
     permission = gets.chomp
     puts 'Person created successfully '
     puts
+    @app.create_a_student(name, age, permission)
   end
 
   def create_a_teacher
@@ -25,6 +26,7 @@ class Main
     specialization = gets.chomp
     puts 'Person created successfully '
     puts
+    @app.create_a_teacher(name, age, specialization)
   end
 
   def create_a_person
@@ -56,19 +58,26 @@ class Main
 
   def create_a_rental
     puts 'Select a book from the following list by number'
+    list_all_books(with_id: true)
     book = gets.chomp
-    puts 'Select a person from the following list by number'
+    puts 'Select a person from the following list by number (not id)'
+    list_all_persons(with_id: true)
     person = gets.chomp
     print 'Date : '
     date = gets.chomp
     puts 'Rental created successfully '
     puts
+    @app.create_a_rental(date, book.to_i, person.to_i)
   end
 
   def list_rental_person
     print 'ID of person : '
     id = gets.chomp
     puts 'Rentals : '
+    rentals = @app.list_rental_person(id.to_i)
+    rentals&.each do |r|
+      puts "Date: \"#{r.date}\", Book: #{r.book.title} by #{r.book.author}"
+    end
     puts
   end
 
@@ -83,16 +92,42 @@ class Main
     puts '7 - Exit'
   end
 
-  def list_all_books
-    @app.list_all_books.each do |b|
-      puts "Title: \"#{b.title}\", Author: #{b.author}"
+  def list_all_books(with_id: false)
+    if with_id
+      @app.list_all_books.each.with_index(0) do |b, i|
+        puts "#{i}) Title: \"#{b.title}\", Author: #{b.author}"
+      end
+    else
+      @app.list_all_books.each do |b|
+        puts "Title: \"#{b.title}\", Author: #{b.author}"
+      end
     end
+    puts
+  end
+
+  def list_all_persons(with_id: false)
+    if with_id
+      @app.list_all_persons.each.with_index(0) do |p, i|
+        puts "#{i}) [#{p.class}] Name: \"#{p.name}\", ID: #{p.id}, Age: #{p.age}"
+      end
+    else
+      @app.list_all_persons.each do |p|
+        puts "[#{p.class}] Name: \"#{p.name}\", ID: #{p.id}, Age: #{p.age}"
+      end
+    end
+    puts
   end
 
   def main
     puts 'Welcome to School Library App!'
     puts
 
+    run_menu
+
+    puts 'Thank you for using this app!'
+  end
+
+  def run_menu # rubocop:disable Metrics/CyclomaticComplexity
     option = 0
 
     loop do
@@ -102,6 +137,8 @@ class Main
       case option
       when '1'
         list_all_books
+      when '2'
+        list_all_persons
       when '3'
         create_a_person
       when '4'
@@ -116,8 +153,6 @@ class Main
         puts 'Option unknown'
       end
     end
-
-    puts 'Thank you for using this app!'
   end
 end
 
