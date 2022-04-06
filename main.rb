@@ -127,7 +127,7 @@ class Main
     puts 'Thank you for using this app!'
   end
 
-  def run_menu # rubocop:disable Metrics/CyclomaticComplexity
+  def run_menu
     option = 0
 
     loop do

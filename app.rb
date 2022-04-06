@@ -28,7 +28,7 @@ class App
   end
 
   def create_a_student(name, age, parent_permission)
-    @persons.push(Student.new((@id * 100) + 10, age, nil, name, parent_permission:))
+    @persons.push(Student.new((@id * 100) + 10, age, nil, name, parent_permission: parent_permission))
     @id += 1
   end
 
