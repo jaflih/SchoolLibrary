@@ -1,4 +1,5 @@
 require_relative 'app'
+require 'pry'
 
 class Main
   def initialize
@@ -131,7 +132,7 @@ class Main
       break if option == '7'
 
       if option.to_i.positive? && option.to_i < 7
-        send(opts[option.to_i - 1])
+        send(opts[option.to_i])
       else
         puts 'Option unknown'
       end
